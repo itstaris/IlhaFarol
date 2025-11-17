@@ -2,55 +2,68 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [Header("Referências dos Itens")]
-    public GameObject flashlight;
+    public GameObject lantern;
     public GameObject axe;
 
-    private int currentSlot = 0; // 0 = vazio, 1 = lanterna, 2 = machado
+    private bool hasFlashlight = false;
+    private bool hasAxe = false;
+
+    private int currentSlot = 0; // 0=nada, 1=lanterna, 2=machado
 
     void Start()
     {
-        // Começa com nada equipado
         EquipItem(0);
     }
 
     void Update()
     {
-        // Trocar de item
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // Só troca para itens que o jogador já pegou
+        if (Input.GetKeyDown(KeyCode.Alpha1) && hasFlashlight)
             EquipItem(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) && hasAxe)
             EquipItem(2);
 
-        // Alternativamente: usar scroll do mouse
+        // Scroll também só troca se o item existir
         float scroll = Input.GetAxis("Mouse ScrollWheel");
+
         if (scroll > 0f)
-            EquipItem(currentSlot == 2 ? 1 : 2);
+        {
+            if (currentSlot == 1 && hasAxe) EquipItem(2);
+            else if (currentSlot == 2 && hasFlashlight) EquipItem(1);
+        }
         else if (scroll < 0f)
-            EquipItem(currentSlot == 1 ? 2 : 1);
+        {
+            if (currentSlot == 1 && hasAxe) EquipItem(2);
+            else if (currentSlot == 2 && hasFlashlight) EquipItem(1);
+        }
+    }
+
+    public void PickupItem(string itemName)
+    {
+        if (itemName == "Lantern")
+        {
+            hasFlashlight = true;
+            EquipItem(1); // equipa automaticamente
+        }
+        else if (itemName == "Axe")
+        {
+            hasAxe = true;
+            EquipItem(2); // equipa automaticamente
+        }
     }
 
     void EquipItem(int slot)
     {
         currentSlot = slot;
 
-        // Desativa todos os itens
-        flashlight.SetActive(false);
+        lantern.SetActive(false);
         axe.SetActive(false);
 
-        // Ativa o item correspondente
-        if (slot == 1 && flashlight != null)
-            flashlight.SetActive(true);
-        else if (slot == 2 && axe != null)
-            axe.SetActive(true);
-    }
+        if (slot == 1 && hasFlashlight)
+            lantern.SetActive(true);
 
-    public void PickupItem(string itemName)
-    {
-        // Quando pegar o item no mundo
-        if (itemName == "Flashlight")
-            flashlight.SetActive(true);
-        else if (itemName == "Axe")
+        if (slot == 2 && hasAxe)
             axe.SetActive(true);
     }
 }

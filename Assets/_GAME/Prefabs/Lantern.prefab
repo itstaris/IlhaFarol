@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8758473237017740683}
   - component: {fileID: 2755648243357478566}
   - component: {fileID: 1647431970184401012}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,6 +200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lantern
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 68d73832e7ba7354bb3185f32fe145b3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

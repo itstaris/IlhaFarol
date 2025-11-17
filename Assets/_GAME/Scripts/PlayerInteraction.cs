@@ -1,40 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necessário para mudar de cena
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [Header("Configurações de mudança de cena")]
-    public string targetSceneName; // Nome da cena para mudar
-    private bool canChangeScene = false; // Se o player está colidindo com o objeto certo
+    public float interactDistance = 3f;
+    public LayerMask itemLayer;
 
-    // Detecta quando o player entra na área do trigger
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.CompareTag("Player")) // Verifica se é o player
+        if (Input.GetMouseButtonDown(0)) // Botão esquerdo
         {
-            canChangeScene = true;
-            Debug.Log("entrou na colisão");
+            TryPickupItem();
         }
     }
 
-    // Detecta quando o player sai da área do trigger
-    private void OnTriggerExit(Collider other)
+    void TryPickupItem()
     {
-        if (other.CompareTag("Player"))
-        {
-            canChangeScene = false;
-            Debug.Log("saiu da colisão");
-        }
-    }
+        Camera cam = Camera.main;
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2)); 
+        RaycastHit hit;
 
-    // Checa se o jogador pode mudar de cena e se clicou com o mouse
-    private void Update()
-    {
-        if (canChangeScene && Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(ray, out hit, interactDistance, itemLayer))
         {
-            SceneManager.LoadScene(targetSceneName);
+            Item item = hit.collider.GetComponent<Item>();
+
+            if (item != null)
+            {
+                PlayerInventory inventory = FindObjectOfType<PlayerInventory>();
+                inventory.PickupItem(item.itemName); // registra no inventário
+                Destroy(hit.collider.gameObject);   // remove do mundo
+            }
         }
     }
 }
