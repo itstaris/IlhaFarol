@@ -245,7 +245,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Example: call player's health script (if present)
         var hp = player.GetComponent<PlayerHealth>();
-        if (hp != null) hp.ApplyDamage(1);
+        //if (hp != null) hp.ApplyDamage(1);
 
         // fallback: push player or play sound
         // After catching, you can choose to stop chase or continue

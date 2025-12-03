@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.14498042, g: 0.16981131, b: 0.1580493, a: 1}
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.002
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -2028,6 +2028,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5245898df4d2c54eaa9d10ec574279e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
+  agent: {fileID: 0}
+  eyes: {fileID: 0}
+  patrolPoints: []
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  playerTag: Player
+  detectionRange: 16
+  fieldOfView: 100
+  lostSightTime: 3
+  searchDuration: 6
+  patrolSpeed: 2
+  chaseSpeed: 3.5
+  stoppingDistance: 1.6
+  audioSource: {fileID: 0}
+  alertClip: {fileID: 0}
+  footstepClip: {fileID: 0}
+  bodyRenderer: {fileID: 0}
 --- !u!82 &780227876
 AudioSource:
   m_ObjectHideFlags: 0
